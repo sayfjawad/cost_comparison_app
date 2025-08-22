@@ -1,0 +1,895 @@
+<!DOCTYPE html>
+<html lang="nl">
+<head>
+    <meta charset="UTF-8">
+    <link rel="icon" type="image/x-icon" href="/favicon.ico" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Kostenvergelijking Nederland vs Zweden</title>
+    <style>
+        body { 
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; 
+            margin: 0; 
+            padding: 20px; 
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+        }
+        
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            background: white;
+            border-radius: 15px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+            overflow: hidden;
+        }
+        
+        .header {
+            background: linear-gradient(135deg, #4CAF50 0%, #45a049 100%);
+            color: white;
+            padding: 30px;
+            text-align: center;
+            position: relative;
+        }
+        
+        .language-switcher {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            display: flex;
+            gap: 10px;
+        }
+        
+        .language-btn {
+            background: rgba(255,255,255,0.2);
+            border: 2px solid rgba(255,255,255,0.3);
+            color: white;
+            padding: 8px 12px;
+            border-radius: 20px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-size: 14px;
+            font-weight: 500;
+        }
+        
+        .language-btn:hover {
+            background: rgba(255,255,255,0.3);
+            border-color: rgba(255,255,255,0.5);
+        }
+        
+        .language-btn.active {
+            background: white;
+            color: #4CAF50;
+            border-color: white;
+        }
+        
+        .header h1 {
+            margin: 0;
+            font-size: 2.5em;
+            font-weight: 300;
+        }
+        
+        .header p {
+            margin: 10px 0 0 0;
+            opacity: 0.9;
+            font-size: 1.1em;
+        }
+        
+        .content {
+            padding: 30px;
+        }
+        
+        .comparison-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr 1fr;
+            gap: 20px;
+            margin-bottom: 30px;
+        }
+        
+        .category-header {
+            font-weight: bold;
+            padding: 15px;
+            background: #f8f9fa;
+            border-radius: 8px;
+            text-align: center;
+            font-size: 1.1em;
+        }
+        
+        .cost-item {
+            display: grid;
+            grid-template-columns: 1fr 1fr 1fr;
+            gap: 20px;
+            align-items: center;
+            padding: 15px 0;
+            border-bottom: 1px solid #eee;
+        }
+        
+        .cost-label {
+            display: flex;
+            align-items: center;
+            font-weight: 500;
+        }
+        
+        .cost-label .icon {
+            font-size: 1.5em;
+            margin-right: 10px;
+            width: 30px;
+            text-align: center;
+        }
+        
+        .input-field {
+            position: relative;
+        }
+        
+        .input-field input {
+            width: 100%;
+            padding: 12px 15px;
+            border: 2px solid #ddd;
+            border-radius: 8px;
+            font-size: 16px;
+            transition: all 0.3s ease;
+            box-sizing: border-box;
+        }
+        
+        .input-field input:focus {
+            outline: none;
+            border-color: #4CAF50;
+            box-shadow: 0 0 0 3px rgba(76, 175, 80, 0.1);
+        }
+        
+        .currency {
+            position: absolute;
+            left: 15px;
+            top: 50%;
+            transform: translateY(-50%);
+            color: #666;
+            pointer-events: none;
+        }
+        
+        .input-field input {
+            padding-left: 35px;
+        }
+        
+        .results-section {
+            margin-top: 40px;
+            padding: 30px;
+            background: #f8f9fa;
+            border-radius: 15px;
+        }
+        
+        .results-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr 1fr;
+            gap: 20px;
+            margin-top: 20px;
+        }
+        
+        .result-item {
+            display: grid;
+            grid-template-columns: 1fr 1fr 1fr;
+            gap: 20px;
+            align-items: center;
+            padding: 15px 0;
+            border-bottom: 1px solid #ddd;
+        }
+        
+        .result-value {
+            padding: 15px;
+            border-radius: 8px;
+            font-weight: bold;
+            font-size: 1.1em;
+            text-align: center;
+            border: 2px solid transparent;
+        }
+        
+        .pastel-green {
+            background-color: #d4edda !important;
+            border-color: #c3e6cb !important;
+            color: #155724 !important;
+        }
+        
+        .pastel-red {
+            background-color: #f8d7da !important;
+            border-color: #f5c6cb !important;
+            color: #721c24 !important;
+        }
+        
+        .neutral {
+            background-color: #e2e3e5;
+            border-color: #d6d8db;
+            color: #383d41;
+        }
+        
+        .summary {
+            margin-top: 30px;
+            padding: 25px;
+            background: white;
+            border-radius: 10px;
+            border-left: 5px solid #4CAF50;
+        }
+        
+        .summary h3 {
+            margin-top: 0;
+            color: #4CAF50;
+        }
+        
+        .download-section {
+            margin-top: 30px;
+            padding: 25px;
+            background: #e3f2fd;
+            border-radius: 10px;
+            border-left: 5px solid #2196F3;
+            text-align: center;
+        }
+        
+        .download-btn {
+            background: #2196F3;
+            color: white;
+            padding: 12px 24px;
+            border: none;
+            border-radius: 8px;
+            font-size: 16px;
+            font-weight: 500;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-decoration: none;
+            display: inline-block;
+            margin-top: 10px;
+        }
+        
+        .download-btn:hover {
+            background: #1976D2;
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(33, 150, 243, 0.3);
+        }
+        
+        @media (max-width: 768px) {
+            .comparison-grid,
+            .results-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .cost-item,
+            .result-item {
+                grid-template-columns: 1fr;
+                text-align: center;
+            }
+            
+            .cost-label {
+                justify-content: center;
+                margin-bottom: 10px;
+            }
+            
+            .language-switcher {
+                position: static;
+                justify-content: center;
+                margin-bottom: 20px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <div class="language-switcher">
+                <button class="language-btn active" onclick="switchLanguage('nl')">🇳🇱 NL</button>
+                <button class="language-btn" onclick="switchLanguage('en')">🇬🇧 EN</button>
+                <button class="language-btn" onclick="switchLanguage('sv')">🇸🇪 SV</button>
+            </div>
+            <h1 id="main-title">💰 Kostenvergelijking</h1>
+            <p id="subtitle">Nederland vs Zweden - Senior Java Developer</p>
+        </div>
+        
+        <div class="content">
+            <div class="comparison-grid">
+                <div class="category-header" id="header-category">Kostenpost</div>
+                <div class="category-header">🇳🇱 <span id="header-netherlands">Nederland</span> (€)</div>
+                <div class="category-header">🇸🇪 <span id="header-sweden">Zweden</span> (€)</div>
+            </div>
+            
+            <!-- Salary Section -->
+            <div class="cost-item">
+                <div class="cost-label">
+                    <span class="icon">💼</span>
+                    <span id="label-salary">Bruto Maandsalaris (Werknemer)</span>
+                </div>
+                <div class="input-field">
+                    <span class="currency">€</span>
+                    <input type="number" id="salary-nl" value="5833" oninput="calculateAll()">
+                </div>
+                <div class="input-field">
+                    <span class="currency">€</span>
+                    <input type="number" id="salary-se" value="5000" oninput="calculateAll()">
+                </div>
+            </div>
+            
+            <div class="cost-item">
+                <div class="cost-label">
+                    <span class="icon">🏢</span>
+                    <span id="label-freelance">Freelance Uurtarief</span>
+                </div>
+                <div class="input-field">
+                    <span class="currency">€</span>
+                    <input type="number" id="freelance-nl" value="80" oninput="calculateAll()">
+                </div>
+                <div class="input-field">
+                    <span class="currency">€</span>
+                    <input type="number" id="freelance-se" value="70" oninput="calculateAll()">
+                </div>
+            </div>
+            
+            <!-- Number of Children -->
+            <div class="cost-item">
+                <div class="cost-label">
+                    <span class="icon">👨‍👩‍👧‍👦</span>
+                    <span id="label-children">Aantal Kinderen</span>
+                </div>
+                <div class="input-field">
+                    <input type="number" id="num-children-nl" value="0" min="0" oninput="calculateAll()" style="padding-left: 15px;">
+                </div>
+                <div class="input-field">
+                    <input type="number" id="num-children-se" value="0" min="0" oninput="calculateAll()" style="padding-left: 15px;">
+                </div>
+            </div>
+
+            <!-- Fixed Costs Section -->
+            <div class="cost-item">
+                <div class="cost-label">
+                    <span class="icon">⚡</span>
+                    <span id="label-utilities">Nutsvoorzieningen (Gas/Water/Elektra)</span>
+                </div>
+                <div class="input-field">
+                    <span class="currency">€</span>
+                    <input type="number" id="utilities-nl" value="221" oninput="calculateAll()">
+                </div>
+                <div class="input-field">
+                    <span class="currency">€</span>
+                    <input type="number" id="utilities-se" value="500" oninput="calculateAll()">
+                </div>
+            </div>
+            
+            <div class="cost-item">
+                <div class="cost-label">
+                    <span class="icon">🏥</span>
+                    <span id="label-health">Zorgverzekering</span>
+                </div>
+                <div class="input-field">
+                    <span class="currency">€</span>
+                    <input type="number" id="health-nl" value="158" oninput="calculateAll()">
+                </div>
+                <div class="input-field">
+                    <span class="currency">€</span>
+                    <input type="number" id="health-se" value="20" oninput="calculateAll()">
+                </div>
+            </div>
+            
+            <div class="cost-item">
+                <div class="cost-label">
+                    <span class="icon">🚗</span>
+                    <span id="label-car">Autoverzekering</span>
+                </div>
+                <div class="input-field">
+                    <span class="currency">€</span>
+                    <input type="number" id="car-nl" value="70" oninput="calculateAll()">
+                </div>
+                <div class="input-field">
+                    <span class="currency">€</span>
+                    <input type="number" id="car-se" value="80" oninput="calculateAll()">
+                </div>
+            </div>
+            
+            <div class="cost-item">
+                <div class="cost-label">
+                    <span class="icon">🏠</span>
+                    <span id="label-mortgage">Hypotheek/Huur</span>
+                </div>
+                <div class="input-field">
+                    <span class="currency">€</span>
+                    <input type="number" id="mortgage-nl" value="1700" oninput="calculateAll()">
+                </div>
+                <div class="input-field">
+                    <span class="currency">€</span>
+                    <input type="number" id="mortgage-se" value="1500" oninput="calculateAll()">
+                </div>
+            </div>
+            
+            <div class="cost-item">
+                <div class="cost-label">
+                    <span class="icon">👶</span>
+                    <span id="label-childcare">Kinderopvang (per kind)</span>
+                </div>
+                <div class="input-field">
+                    <span class="currency">€</span>
+                    <input type="number" id="childcare-cost-nl" value="1000" oninput="calculateAll()">
+                </div>
+                <div class="input-field">
+                    <span class="currency">€</span>
+                    <input type="number" id="childcare-cost-se" value="135" oninput="calculateAll()">
+                </div>
+            </div>
+            
+            <div class="cost-item">
+                <div class="cost-label">
+                    <span class="icon">🛡️</span>
+                    <span id="label-contents">Inboedelverzekering</span>
+                </div>
+                <div class="input-field">
+                    <span class="currency">€</span>
+                    <input type="number" id="contents-nl" value="12.50" oninput="calculateAll()">
+                </div>
+                <div class="input-field">
+                    <span class="currency">€</span>
+                    <input type="number" id="contents-se" value="40" oninput="calculateAll()">
+                </div>
+            </div>
+            
+            <div class="cost-item">
+                <div class="cost-label">
+                    <span class="icon">⚖️</span>
+                    <span id="label-liability">Aansprakelijkheidsverzekering</span>
+                </div>
+                <div class="input-field">
+                    <span class="currency">€</span>
+                    <input type="number" id="liability-nl" value="5" oninput="calculateAll()">
+                </div>
+                <div class="input-field">
+                    <span class="currency">€</span>
+                    <input type="number" id="liability-se" value="5" oninput="calculateAll()">
+                </div>
+            </div>
+            
+            <div class="cost-item">
+                <div class="cost-label">
+                    <span class="icon">🌐</span>
+                    <span id="label-internet">Internet</span>
+                </div>
+                <div class="input-field">
+                    <span class="currency">€</span>
+                    <input type="number" id="internet-nl" value="66" oninput="calculateAll()">
+                </div>
+                <div class="input-field">
+                    <span class="currency">€</span>
+                    <input type="number" id="internet-se" value="17" oninput="calculateAll()">
+                </div>
+            </div>
+            
+            <div class="cost-item">
+                <div class="cost-label">
+                    <span class="icon">🛒</span>
+                    <span id="label-groceries">Boodschappen (per persoon)</span>
+                </div>
+                <div class="input-field">
+                    <span class="currency">€</span>
+                    <input type="number" id="groceries-nl" value="250" oninput="calculateAll()">
+                </div>
+                <div class="input-field">
+                    <span class="currency">€</span>
+                    <input type="number" id="groceries-se" value="450" oninput="calculateAll()">
+                </div>
+            </div>
+            
+            <div class="cost-item">
+                <div class="cost-label">
+                    <span class="icon">💸</span>
+                    <span id="label-tax">Belastingtarief (%)</span>
+                </div>
+                <div class="input-field">
+                    <span class="currency">%</span>
+                    <input type="number" id="tax-nl" value="37" oninput="calculateAll()">
+                </div>
+                <div class="input-field">
+                    <span class="currency">%</span>
+                    <input type="number" id="tax-se" value="30" oninput="calculateAll()">
+                </div>
+            </div>
+            
+            <!-- Results Section -->
+            <div class="results-section">
+                <h2 id="results-title">📊 Resultaten</h2>
+                
+                <div class="comparison-grid">
+                    <div class="category-header" id="results-header-calculation">Berekening</div>
+                    <div class="category-header">🇳🇱 <span id="results-header-netherlands">Nederland</span></div>
+                    <div class="category-header">🇸🇪 <span id="results-header-sweden">Zweden</span></div>
+                </div>
+                
+                <div class="result-item">
+                    <div class="cost-label">
+                        <span class="icon">💰</span>
+                        <span id="result-net-salary">Netto Maandsalaris (Werknemer)</span>
+                    </div>
+                    <div class="result-value" id="net-salary-nl">€ 0</div>
+                    <div class="result-value" id="net-salary-se">€ 0</div>
+                </div>
+                
+                <div class="result-item">
+                    <div class="cost-label">
+                        <span class="icon">💼</span>
+                        <span id="result-net-freelance">Netto Freelance Inkomen (160u)</span>
+                    </div>
+                    <div class="result-value" id="net-freelance-nl">€ 0</div>
+                    <div class="result-value" id="net-freelance-se">€ 0</div>
+                </div>
+                
+                <div class="result-item">
+                    <div class="cost-label">
+                        <span class="icon">📋</span>
+                        <span id="result-total-costs">Totale Maandelijkse Vaste Lasten</span>
+                    </div>
+                    <div class="result-value" id="total-costs-nl">€ 0</div>
+                    <div class="result-value" id="total-costs-se">€ 0</div>
+                </div>
+                
+                <div class="result-item">
+                    <div class="cost-label">
+                        <span class="icon">✨</span>
+                        <span id="result-disposable-salary">Besteedbaar Inkomen (Werknemer)</span>
+                    </div>
+                    <div class="result-value" id="disposable-salary-nl">€ 0</div>
+                    <div class="result-value" id="disposable-salary-se">€ 0</div>
+                </div>
+                
+                <div class="result-item">
+                    <div class="cost-label">
+                        <span class="icon">🚀</span>
+                        <span id="result-disposable-freelance">Besteedbaar Inkomen (Freelance)</span>
+                    </div>
+                    <div class="result-value" id="disposable-freelance-nl">€ 0</div>
+                    <div class="result-value" id="disposable-freelance-se">€ 0</div>
+                </div>
+            </div>
+            
+            <div class="summary">
+                <h3 id="summary-title">📈 Samenvatting</h3>
+                <p id="summary-text">Vul de velden in om een vergelijking te zien.</p>
+            </div>
+            
+            <div class="download-section">
+                <h3 id="download-title">📦 Download Applicatie</h3>
+                <p id="download-description">Download de volledige webapplicatie om zelf te hosten of aan te passen.</p>
+                <a href="/download_app" class="download-btn" id="download-btn">⬇️ Download ZIP</a>
+            </div>
+        </div>
+    </div>
+    
+    <script>
+        // Language translations
+        const translations = {
+            nl: {
+                'main-title': '💰 Kostenvergelijking',
+                'subtitle': 'Nederland vs Zweden - Senior Java Developer',
+                'header-category': 'Kostenpost',
+                'header-netherlands': 'Nederland',
+                'header-sweden': 'Zweden',
+                'label-salary': 'Bruto Maandsalaris (Werknemer)',
+                'label-freelance': 'Freelance Uurtarief',
+                'label-children': 'Aantal Kinderen',
+                'label-utilities': 'Nutsvoorzieningen (Gas/Water/Elektra)',
+                'label-health': 'Zorgverzekering',
+                'label-car': 'Autoverzekering',
+                'label-mortgage': 'Hypotheek/Huur',
+                'label-childcare': 'Kinderopvang (per kind)',
+                'label-contents': 'Inboedelverzekering',
+                'label-liability': 'Aansprakelijkheidsverzekering',
+                'label-internet': 'Internet',
+                'label-groceries': 'Boodschappen (per persoon)',
+                'label-tax': 'Belastingtarief (%)',
+                'results-title': '📊 Resultaten',
+                'results-header-calculation': 'Berekening',
+                'results-header-netherlands': 'Nederland',
+                'results-header-sweden': 'Zweden',
+                'result-net-salary': 'Netto Maandsalaris (Werknemer)',
+                'result-net-freelance': 'Netto Freelance Inkomen (160u)',
+                'result-total-costs': 'Totale Maandelijkse Vaste Lasten',
+                'result-disposable-salary': 'Besteedbaar Inkomen (Werknemer)',
+                'result-disposable-freelance': 'Besteedbaar Inkomen (Freelance)',
+                'summary-title': '📈 Samenvatting',
+                'download-title': '📦 Download Applicatie',
+                'download-description': 'Download de volledige webapplicatie om zelf te hosten of aan te passen.',
+                'download-btn': '⬇️ Download ZIP',
+                'summary-default': 'Vul de velden in om een vergelijking te zien.',
+                'summary-employee-nl': 'Als werknemer heb je in Nederland €{0} meer besteedbaar inkomen per maand. ',
+                'summary-employee-se': 'Als werknemer heb je in Zweden €{0} meer besteedbaar inkomen per maand. ',
+                'summary-employee-equal': 'Als werknemer is het besteedbaar inkomen gelijk in beide landen. ',
+                'summary-freelance-nl': 'Als freelancer heb je in Nederland €{0} meer besteedbaar inkomen per maand.',
+                'summary-freelance-se': 'Als freelancer heb je in Zweden €{0} meer besteedbaar inkomen per maand.',
+                'summary-freelance-equal': 'Als freelancer is het besteedbaar inkomen gelijk in beide landen.'
+            },
+            en: {
+                'main-title': '💰 Cost Comparison',
+                'subtitle': 'Netherlands vs Sweden - Senior Java Developer',
+                'header-category': 'Cost Category',
+                'header-netherlands': 'Netherlands',
+                'header-sweden': 'Sweden',
+                'label-salary': 'Gross Monthly Salary (Employee)',
+                'label-freelance': 'Freelance Hourly Rate',
+                'label-children': 'Number of Children',
+                'label-utilities': 'Utilities (Gas/Water/Electricity)',
+                'label-health': 'Health Insurance',
+                'label-car': 'Car Insurance',
+                'label-mortgage': 'Mortgage/Rent',
+                'label-childcare': 'Childcare (per child)',
+                'label-contents': 'Home Contents Insurance',
+                'label-liability': 'Liability Insurance',
+                'label-internet': 'Internet',
+                'label-groceries': 'Groceries (per person)',
+                'label-tax': 'Tax Rate (%)',
+                'results-title': '📊 Results',
+                'results-header-calculation': 'Calculation',
+                'results-header-netherlands': 'Netherlands',
+                'results-header-sweden': 'Sweden',
+                'result-net-salary': 'Net Monthly Salary (Employee)',
+                'result-net-freelance': 'Net Freelance Income (160h)',
+                'result-total-costs': 'Total Monthly Fixed Costs',
+                'result-disposable-salary': 'Disposable Income (Employee)',
+                'result-disposable-freelance': 'Disposable Income (Freelance)',
+                'summary-title': '📈 Summary',
+                'download-title': '📦 Download Application',
+                'download-description': 'Download the complete web application to host or customize yourself.',
+                'download-btn': '⬇️ Download ZIP',
+                'summary-default': 'Fill in the fields to see a comparison.',
+                'summary-employee-nl': 'As an employee you have €{0} more disposable income per month in the Netherlands. ',
+                'summary-employee-se': 'As an employee you have €{0} more disposable income per month in Sweden. ',
+                'summary-employee-equal': 'As an employee the disposable income is equal in both countries. ',
+                'summary-freelance-nl': 'As a freelancer you have €{0} more disposable income per month in the Netherlands.',
+                'summary-freelance-se': 'As a freelancer you have €{0} more disposable income per month in Sweden.',
+                'summary-freelance-equal': 'As a freelancer the disposable income is equal in both countries.'
+            },
+            sv: {
+                'main-title': '💰 Kostnadsjämförelse',
+                'subtitle': 'Nederländerna vs Sverige - Senior Java-utvecklare',
+                'header-category': 'Kostnadskategori',
+                'header-netherlands': 'Nederländerna',
+                'header-sweden': 'Sverige',
+                'label-salary': 'Bruttomånadslön (Anställd)',
+                'label-freelance': 'Frilans Timtariff',
+                'label-children': 'Antal Barn',
+                'label-utilities': 'Allmännyttiga tjänster (Gas/Vatten/El)',
+                'label-health': 'Sjukförsäkring',
+                'label-car': 'Bilförsäkring',
+                'label-mortgage': 'Bolån/Hyra',
+                'label-childcare': 'Barnomsorg (per barn)',
+                'label-contents': 'Hemförsäkring',
+                'label-liability': 'Ansvarsförsäkring',
+                'label-internet': 'Internet',
+                'label-groceries': 'Matvaror (per person)',
+                'label-tax': 'Skattesats (%)',
+                'results-title': '📊 Resultat',
+                'results-header-calculation': 'Beräkning',
+                'results-header-netherlands': 'Nederländerna',
+                'results-header-sweden': 'Sverige',
+                'result-net-salary': 'Nettomånadslön (Anställd)',
+                'result-net-freelance': 'Netto Frilansinkomst (160t)',
+                'result-total-costs': 'Totala Månatliga Fasta Kostnader',
+                'result-disposable-salary': 'Disponibel Inkomst (Anställd)',
+                'result-disposable-freelance': 'Disponibel Inkomst (Frilans)',
+                'summary-title': '📈 Sammanfattning',
+                'download-title': '📦 Ladda ner Applikation',
+                'download-description': 'Ladda ner den kompletta webbapplikationen för att vara värd eller anpassa själv.',
+                'download-btn': '⬇️ Ladda ner ZIP',
+                'summary-default': 'Fyll i fälten för att se en jämförelse.',
+                'summary-employee-nl': 'Som anställd har du €{0} mer disponibel inkomst per månad i Nederländerna. ',
+                'summary-employee-se': 'Som anställd har du €{0} mer disponibel inkomst per månad i Sverige. ',
+                'summary-employee-equal': 'Som anställd är den disponibla inkomsten lika i båda länderna. ',
+                'summary-freelance-nl': 'Som frilansare har du €{0} mer disponibel inkomst per månad i Nederländerna.',
+                'summary-freelance-se': 'Som frilansare har du €{0} mer disponibel inkomst per månad i Sverige.',
+                'summary-freelance-equal': 'Som frilansare är den disponibla inkomsten lika i båda länderna.'
+            }
+        };
+        
+        let currentLanguage = 'nl';
+        
+        function switchLanguage(lang) {
+            currentLanguage = lang;
+            
+            // Update active button
+            document.querySelectorAll('.language-btn').forEach(btn => btn.classList.remove('active'));
+            event.target.classList.add('active');
+            
+            // Update all translatable elements
+            const langData = translations[lang];
+            for (const [key, value] of Object.entries(langData)) {
+                const element = document.getElementById(key);
+                if (element) {
+                    element.textContent = value;
+                }
+            }
+            
+            // Update document language
+            document.documentElement.lang = lang;
+            
+            // Recalculate to update summary in new language
+            calculateAll();
+        }
+        
+        function calculateAll() {
+            // Get all input values
+            const data = {
+                nl: {
+                    salary: parseFloat(document.getElementById("salary-nl").value) || 0,
+                    freelance: parseFloat(document.getElementById("freelance-nl").value) || 0,
+                    numChildren: parseInt(document.getElementById("num-children-nl").value) || 0,
+                    utilities: parseFloat(document.getElementById("utilities-nl").value) || 0,
+                    health: parseFloat(document.getElementById("health-nl").value) || 0,
+                    car: parseFloat(document.getElementById("car-nl").value) || 0,
+                    mortgage: parseFloat(document.getElementById("mortgage-nl").value) || 0,
+                    childcareCost: parseFloat(document.getElementById("childcare-cost-nl").value) || 0,
+                    contents: parseFloat(document.getElementById("contents-nl").value) || 0,
+                    liability: parseFloat(document.getElementById("liability-nl").value) || 0,
+                    internet: parseFloat(document.getElementById("internet-nl").value) || 0,
+                    groceries: parseFloat(document.getElementById("groceries-nl").value) || 0,
+                    tax: parseFloat(document.getElementById("tax-nl").value) || 0
+                },
+                se: {
+                    salary: parseFloat(document.getElementById("salary-se").value) || 0,
+                    freelance: parseFloat(document.getElementById("freelance-se").value) || 0,
+                    numChildren: parseInt(document.getElementById("num-children-se").value) || 0,
+                    utilities: parseFloat(document.getElementById("utilities-se").value) || 0,
+                    health: parseFloat(document.getElementById("health-se").value) || 0,
+                    car: parseFloat(document.getElementById("car-se").value) || 0,
+                    mortgage: parseFloat(document.getElementById("mortgage-se").value) || 0,
+                    childcareCost: parseFloat(document.getElementById("childcare-cost-se").value) || 0,
+                    contents: parseFloat(document.getElementById("contents-se").value) || 0,
+                    liability: parseFloat(document.getElementById("liability-se").value) || 0,
+                    internet: parseFloat(document.getElementById("internet-se").value) || 0,
+                    groceries: parseFloat(document.getElementById("groceries-se").value) || 0,
+                    tax: parseFloat(document.getElementById("tax-se").value) || 0
+                }
+            };
+            
+            // Calculate actual childcare costs based on number of children
+            data.nl.childcare = data.nl.childcareCost * data.nl.numChildren;
+            data.se.childcare = data.se.childcareCost * data.se.numChildren;
+
+            // Calculate net salaries
+            const netSalaryNL = data.nl.salary * (1 - data.nl.tax / 100);
+            const netSalarySE = data.se.salary * (1 - data.se.tax / 100);
+            
+            // Calculate net freelance income (160 hours)
+            const netFreelanceNL = (data.nl.freelance * 160) * (1 - data.nl.tax / 100);
+            const netFreelanceSE = (data.se.freelance * 160) * (1 - data.se.tax / 100);
+            
+            // Calculate total fixed costs
+            const totalCostsNL = data.nl.utilities + data.nl.health + data.nl.car + data.nl.mortgage + 
+                                 data.nl.childcare + data.nl.contents + data.nl.liability + 
+                                 data.nl.internet + data.nl.groceries;
+            const totalCostsSE = data.se.utilities + data.se.health + data.se.car + data.se.mortgage + 
+                                 data.se.childcare + data.se.contents + data.se.liability + 
+                                 data.se.internet + data.se.groceries;
+            
+            // Calculate disposable income
+            const disposableSalaryNL = netSalaryNL - totalCostsNL;
+            const disposableSalarySE = netSalarySE - totalCostsSE;
+            const disposableFreelanceNL = netFreelanceNL - totalCostsNL;
+            const disposableFreelanceSE = netFreelanceSE - totalCostsSE;
+            
+            // Update display
+            updateResultDisplay("net-salary-nl", netSalaryNL, "net-salary-se", netSalarySE);
+            updateResultDisplay("net-freelance-nl", netFreelanceNL, "net-freelance-se", netFreelanceSE);
+            updateResultDisplay("total-costs-nl", totalCostsNL, "total-costs-se", totalCostsSE, true);
+            updateResultDisplay("disposable-salary-nl", disposableSalaryNL, "disposable-salary-se", disposableSalarySE);
+            updateResultDisplay("disposable-freelance-nl", disposableFreelanceNL, "disposable-freelance-se", disposableFreelanceSE);
+            
+            // Update input field colors
+            updateInputColors();
+            
+            // Update summary
+            updateSummary(disposableSalaryNL, disposableSalarySE, disposableFreelanceNL, disposableFreelanceSE);
+        }
+        
+        function updateResultDisplay(id1, value1, id2, value2, inverse = false) {
+            const elem1 = document.getElementById(id1);
+            const elem2 = document.getElementById(id2);
+            
+            elem1.textContent = "€ " + value1.toFixed(2);
+            elem2.textContent = "€ " + value2.toFixed(2);
+            
+            // Apply colors (green for better, red for worse)
+            elem1.className = "result-value";
+            elem2.className = "result-value";
+            
+            if (value1 !== value2) {
+                if (inverse) {
+                    // For costs, lower is better
+                    if (value1 < value2) {
+                        elem1.classList.add("pastel-green");
+                        elem2.classList.add("pastel-red");
+                    } else {
+                        elem1.classList.add("pastel-red");
+                        elem2.classList.add("pastel-green");
+                    }
+                } else {
+                    // For income, higher is better
+                    if (value1 > value2) {
+                        elem1.classList.add("pastel-green");
+                        elem2.classList.add("pastel-red");
+                    } else {
+                        elem1.classList.add("pastel-red");
+                        elem2.classList.add("pastel-green");
+                    }
+                }
+            } else {
+                elem1.classList.add("neutral");
+                elem2.classList.add("neutral");
+            }
+        }
+        
+        function updateInputColors() {
+            const inputs = [
+                ["salary-nl", "salary-se"],
+                ["freelance-nl", "freelance-se"],
+                ["utilities-nl", "utilities-se"],
+                ["health-nl", "health-se"],
+                ["car-nl", "car-se"],
+                ["mortgage-nl", "mortgage-se"],
+                ["childcare-cost-nl", "childcare-cost-se"],
+                ["contents-nl", "contents-se"],
+                ["liability-nl", "liability-se"],
+                ["internet-nl", "internet-se"],
+                ["groceries-nl", "groceries-se"]
+            ];
+            
+            inputs.forEach(([id1, id2]) => {
+                const elem1 = document.getElementById(id1);
+                const elem2 = document.getElementById(id2);
+                const value1 = parseFloat(elem1.value) || 0;
+                const value2 = parseFloat(elem2.value) || 0;
+                
+                // Reset classes
+                elem1.style.backgroundColor = '';
+                elem2.style.backgroundColor = '';
+                
+                if (value1 !== value2) {
+                    if (id1.includes("salary") || id1.includes("freelance")) {
+                        // For income, higher is better (green)
+                        if (value1 > value2) {
+                            elem1.style.backgroundColor = '#d4edda';
+                            elem2.style.backgroundColor = '#f8d7da';
+                        } else {
+                            elem1.style.backgroundColor = '#f8d7da';
+                            elem2.style.backgroundColor = '#d4edda';
+                        }
+                    } else {
+                        // For costs, lower is better (green)
+                        if (value1 < value2) {
+                            elem1.style.backgroundColor = '#d4edda';
+                            elem2.style.backgroundColor = '#f8d7da';
+                        } else {
+                            elem1.style.backgroundColor = '#f8d7da';
+                            elem2.style.backgroundColor = '#d4edda';
+                        }
+                    }
+                }
+            });
+        }
+        
+        function updateSummary(salaryNL, salarySE, freelanceNL, freelanceSE) {
+            const summaryElement = document.getElementById("summary-text");
+            const lang = translations[currentLanguage];
+            
+            let text = '';
+            
+            if (salaryNL > salarySE) {
+                text += lang['summary-employee-nl'].replace('{0}', (salaryNL - salarySE).toFixed(2));
+            } else if (salarySE > salaryNL) {
+                text += lang['summary-employee-se'].replace('{0}', (salarySE - salaryNL).toFixed(2));
+            } else {
+                text += lang['summary-employee-equal'];
+            }
+            
+            if (freelanceNL > freelanceSE) {
+                text += lang['summary-freelance-nl'].replace('{0}', (freelanceNL - freelanceSE).toFixed(2));
+            } else if (freelanceSE > freelanceNL) {
+                text += lang['summary-freelance-se'].replace('{0}', (freelanceSE - freelanceNL).toFixed(2));
+            } else {
+                text += lang['summary-freelance-equal'];
+            }
+            
+            summaryElement.textContent = text;
+        }
+        
+        // Initial calculation
+        calculateAll();
+    </script>
+</body>
+</html>
+
