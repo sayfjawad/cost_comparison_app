@@ -1,0 +1,297 @@
+{
+  "countries": {
+    "nl": {
+      "name": "Nederland",
+      "flag": "🇳🇱",
+      "currency": "€",
+      "default_values": {
+        "salary": 5833,
+        "freelance_rate": 80,
+        "num_children": 0,
+        "child_allowance": 115,
+        "international_school": 1000,
+        "utilities": 221,
+        "health_insurance": 158,
+        "car_insurance": 70,
+        "mortgage_rent": 1700,
+        "childcare_cost": 1000,
+        "contents_insurance": 12.50,
+        "liability_insurance": 5,
+        "internet": 66,
+        "groceries": 250,
+        "tax_rate": 37
+      }
+    },
+    "se": {
+      "name": "Zweden",
+      "flag": "🇸🇪",
+      "currency": "€",
+      "default_values": {
+        "salary": 5000,
+        "freelance_rate": 70,
+        "num_children": 0,
+        "child_allowance": 107.50,
+        "international_school": 1000,
+        "utilities": 500,
+        "health_insurance": 20,
+        "car_insurance": 80,
+        "mortgage_rent": 1500,
+        "childcare_cost": 135,
+        "contents_insurance": 40,
+        "liability_insurance": 5,
+        "internet": 17,
+        "groceries": 450,
+        "tax_rate": 30
+      }
+    }
+  },
+  "cost_fields": [
+    {
+      "id": "salary",
+      "icon": "💼",
+      "type": "income",
+      "calculation_type": "monthly_income",
+      "input_type": "currency"
+    },
+    {
+      "id": "freelance_rate",
+      "icon": "🏢",
+      "type": "income",
+      "calculation_type": "hourly_rate",
+      "input_type": "currency"
+    },
+    {
+      "id": "num_children",
+      "icon": "👨‍👩‍👧‍👦",
+      "type": "multiplier",
+      "calculation_type": "count",
+      "input_type": "number"
+    },
+    {
+      "id": "child_allowance",
+      "icon": "👶",
+      "type": "income",
+      "calculation_type": "per_child_monthly",
+      "input_type": "currency"
+    },
+    {
+      "id": "international_school",
+      "icon": "🏫",
+      "type": "cost",
+      "calculation_type": "per_child_yearly",
+      "input_type": "currency"
+    },
+    {
+      "id": "utilities",
+      "icon": "⚡",
+      "type": "cost",
+      "calculation_type": "monthly_fixed",
+      "input_type": "currency"
+    },
+    {
+      "id": "health_insurance",
+      "icon": "🏥",
+      "type": "cost",
+      "calculation_type": "monthly_fixed",
+      "input_type": "currency"
+    },
+    {
+      "id": "car_insurance",
+      "icon": "🚗",
+      "type": "cost",
+      "calculation_type": "monthly_fixed",
+      "input_type": "currency"
+    },
+    {
+      "id": "mortgage_rent",
+      "icon": "🏠",
+      "type": "cost",
+      "calculation_type": "monthly_fixed",
+      "input_type": "currency"
+    },
+    {
+      "id": "childcare_cost",
+      "icon": "👶",
+      "type": "cost",
+      "calculation_type": "per_child_monthly",
+      "input_type": "currency"
+    },
+    {
+      "id": "contents_insurance",
+      "icon": "🛡️",
+      "type": "cost",
+      "calculation_type": "monthly_fixed",
+      "input_type": "currency"
+    },
+    {
+      "id": "liability_insurance",
+      "icon": "⚖️",
+      "type": "cost",
+      "calculation_type": "monthly_fixed",
+      "input_type": "currency"
+    },
+    {
+      "id": "internet",
+      "icon": "🌐",
+      "type": "cost",
+      "calculation_type": "monthly_fixed",
+      "input_type": "currency"
+    },
+    {
+      "id": "groceries",
+      "icon": "🛒",
+      "type": "cost",
+      "calculation_type": "monthly_per_person",
+      "input_type": "currency"
+    },
+    {
+      "id": "tax_rate",
+      "icon": "💸",
+      "type": "tax",
+      "calculation_type": "percentage",
+      "input_type": "percentage"
+    }
+  ],
+  "result_fields": [
+    {
+      "id": "net_salary",
+      "icon": "💰",
+      "calculation_type": "net_monthly_salary"
+    },
+    {
+      "id": "net_freelance",
+      "icon": "💼",
+      "calculation_type": "net_freelance_income"
+    },
+    {
+      "id": "total_costs",
+      "icon": "📋",
+      "calculation_type": "total_monthly_costs"
+    },
+    {
+      "id": "disposable_salary",
+      "icon": "✨",
+      "calculation_type": "disposable_salary"
+    },
+    {
+      "id": "disposable_freelance",
+      "icon": "🚀",
+      "calculation_type": "disposable_freelance"
+    }
+  ],
+  "translations": {
+    "nl": {
+      "main_title": "💰 Kostenvergelijking",
+      "subtitle": "Nederland vs Zweden - Senior Java Developer",
+      "header_category": "Kostenpost",
+      "salary": "Bruto Maandsalaris (Werknemer)",
+      "freelance_rate": "Freelance Uurtarief",
+      "num_children": "Aantal Kinderen",
+      "child_allowance": "Kinderbijslag (per kind, per maand)",
+      "international_school": "Internationale School (per kind, per jaar)",
+      "utilities": "Nutsvoorzieningen (Gas/Water/Elektra)",
+      "health_insurance": "Zorgverzekering",
+      "car_insurance": "Autoverzekering",
+      "mortgage_rent": "Hypotheek/Huur",
+      "childcare_cost": "Kinderopvang (per kind, per maand)",
+      "contents_insurance": "Inboedelverzekering",
+      "liability_insurance": "Aansprakelijkheidsverzekering",
+      "internet": "Internet",
+      "groceries": "Boodschappen (per persoon)",
+      "tax_rate": "Belastingtarief (%)",
+      "results_title": "📊 Resultaten",
+      "results_header_calculation": "Berekening",
+      "net_salary": "Netto Maandsalaris (Werknemer)",
+      "net_freelance": "Netto Freelance Inkomen (160u)",
+      "total_costs": "Totale Maandelijkse Vaste Lasten",
+      "disposable_salary": "Besteedbaar Inkomen (Werknemer)",
+      "disposable_freelance": "Besteedbaar Inkomen (Freelance)",
+      "summary_title": "📈 Samenvatting",
+      "download_title": "📦 Download Applicatie",
+      "download_description": "Download de volledige webapplicatie om zelf te hosten of aan te passen.",
+      "download_btn": "⬇️ Download ZIP",
+      "summary_default": "Vul de velden in om een vergelijking te zien.",
+      "summary_employee_better": "Als werknemer heb je in {country} €{amount} meer besteedbaar inkomen per maand. ",
+      "summary_employee_equal": "Als werknemer is het besteedbaar inkomen gelijk in beide landen. ",
+      "summary_freelance_better": "Als freelancer heb je in {country} €{amount} meer besteedbaar inkomen per maand.",
+      "summary_freelance_equal": "Als freelancer is het besteedbaar inkomen gelijk in beide landen."
+    },
+    "en": {
+      "main_title": "💰 Cost Comparison",
+      "subtitle": "Netherlands vs Sweden - Senior Java Developer",
+      "header_category": "Cost Category",
+      "salary": "Gross Monthly Salary (Employee)",
+      "freelance_rate": "Freelance Hourly Rate",
+      "num_children": "Number of Children",
+      "child_allowance": "Child Allowance (per child, per month)",
+      "international_school": "International School (per child, per year)",
+      "utilities": "Utilities (Gas/Water/Electricity)",
+      "health_insurance": "Health Insurance",
+      "car_insurance": "Car Insurance",
+      "mortgage_rent": "Mortgage/Rent",
+      "childcare_cost": "Childcare (per child, per month)",
+      "contents_insurance": "Home Contents Insurance",
+      "liability_insurance": "Liability Insurance",
+      "internet": "Internet",
+      "groceries": "Groceries (per person)",
+      "tax_rate": "Tax Rate (%)",
+      "results_title": "📊 Results",
+      "results_header_calculation": "Calculation",
+      "net_salary": "Net Monthly Salary (Employee)",
+      "net_freelance": "Net Freelance Income (160h)",
+      "total_costs": "Total Monthly Fixed Costs",
+      "disposable_salary": "Disposable Income (Employee)",
+      "disposable_freelance": "Disposable Income (Freelance)",
+      "summary_title": "📈 Summary",
+      "download_title": "📦 Download Application",
+      "download_description": "Download the complete web application to host or customize yourself.",
+      "download_btn": "⬇️ Download ZIP",
+      "summary_default": "Fill in the fields to see a comparison.",
+      "summary_employee_better": "As an employee you have €{amount} more disposable income per month in {country}. ",
+      "summary_employee_equal": "As an employee the disposable income is equal in both countries. ",
+      "summary_freelance_better": "As a freelancer you have €{amount} more disposable income per month in {country}.",
+      "summary_freelance_equal": "As a freelancer the disposable income is equal in both countries."
+    },
+    "sv": {
+      "main_title": "💰 Kostnadsjämförelse",
+      "subtitle": "Nederländerna vs Sverige - Senior Java-utvecklare",
+      "header_category": "Kostnadskategori",
+      "salary": "Bruttomånadslön (Anställd)",
+      "freelance_rate": "Frilans Timtariff",
+      "num_children": "Antal Barn",
+      "child_allowance": "Barnbidrag (per barn, per månad)",
+      "international_school": "Internationell Skola (per barn, per år)",
+      "utilities": "Allmännyttiga tjänster (Gas/Vatten/El)",
+      "health_insurance": "Sjukförsäkring",
+      "car_insurance": "Bilförsäkring",
+      "mortgage_rent": "Bolån/Hyra",
+      "childcare_cost": "Barnomsorg (per barn, per månad)",
+      "contents_insurance": "Hemförsäkring",
+      "liability_insurance": "Ansvarsförsäkring",
+      "internet": "Internet",
+      "groceries": "Matvaror (per person)",
+      "tax_rate": "Skattesats (%)",
+      "results_title": "📊 Resultat",
+      "results_header_calculation": "Beräkning",
+      "net_salary": "Nettomånadslön (Anställd)",
+      "net_freelance": "Netto Frilansinkomst (160t)",
+      "total_costs": "Totala Månatliga Fasta Kostnader",
+      "disposable_salary": "Disponibel Inkomst (Anställd)",
+      "disposable_freelance": "Disponibel Inkomst (Frilans)",
+      "summary_title": "📈 Sammanfattning",
+      "download_title": "📦 Ladda ner Applikation",
+      "download_description": "Ladda ner den kompletta webbapplikationen för att vara värd eller anpassa själv.",
+      "download_btn": "⬇️ Ladda ner ZIP",
+      "summary_default": "Fyll i fälten för att se en jämförelse.",
+      "summary_employee_better": "Som anställd har du €{amount} mer disponibel inkomst per månad i {country}. ",
+      "summary_employee_equal": "Som anställd är den disponibla inkomsten lika i båda länderna. ",
+      "summary_freelance_better": "Som frilansare har du €{amount} mer disponibel inkomst per månad i {country}.",
+      "summary_freelance_equal": "Som frilansare är den disponibla inkomsten lika i båda länderna."
+    }
+  },
+  "calculation_settings": {
+    "freelance_hours_per_month": 160,
+    "family_size_base": 2
+  }
+}
+
