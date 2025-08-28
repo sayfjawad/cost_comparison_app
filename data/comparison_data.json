@@ -7,7 +7,7 @@
       "default_values": {
         "salary": 5833,
         "freelance_rate": 80,
-        "num_children": 0,
+        "num_children": 1,
         "child_allowance": 115,
         "international_school": 1000,
         "utilities": 221,
@@ -29,7 +29,7 @@
       "default_values": {
         "salary": 5000,
         "freelance_rate": 70,
-        "num_children": 0,
+        "num_children": 1,
         "child_allowance": 107.50,
         "international_school": 1000,
         "utilities": 500,
